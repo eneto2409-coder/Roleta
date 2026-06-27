@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,88 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Agro Sustentável</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(to bottom, #1b5e20, #4caf50, #ff9800); background-attachment: fixed; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; color: white; }
-        
-        /* Design da Roleta */
-        .wheel-container { position: relative; padding: 20px; background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; }
-        .arrow { width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 40px solid #ffeb3b; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); z-index: 10; }
-        #wheel { width: 320px; height: 320px; border-radius: 50%; border: 12px solid #b71c1c; background: conic-gradient(#ff0000 0deg 30deg, #ffff00 30deg 60deg, #0000ff 60deg 90deg, #008000 90deg 120deg, #800080 120deg 150deg, #ffa500 150deg 180deg, #00ffff 180deg 210deg, #ff00ff 210deg 240deg, #adff2f 240deg 270deg, #ffc0cb 270deg 300deg, #008080 300deg 330deg, #ffffff 330deg 360deg); transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        .center-circle { width: 70px; height: 70px; background: white; border-radius: 50%; border: 5px solid #333; display: flex; align-items: center; justify-content: center; color: #b71c1c; font-weight: bold; }
-        
-        /* Ajustes de Fonte e Cards */
-        .card { background: rgba(255,255,255,0.95); padding: 25px; border-radius: 20px; color: #333; width: 90%; max-width: 450px; text-align: center; margin-top: 20px; }
-        .age-btn { font-size: 1.2rem; padding: 15px; margin: 8px 0; border-radius: 12px; }
-        h1 { font-size: 2rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-image: url('https://i.imgur.com/vH1Wn2q.png'); /* Substitua pelo nome do seu arquivo de imagem se subir para o repo */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.4);
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Roleta */
+        .wheel-container { position: relative; margin-bottom: 30px; }
+        #wheel { 
+            width: 320px; height: 320px; border-radius: 50%; border: 15px solid #d32f2f; 
+            background: conic-gradient(#ff0000 0deg 60deg, #ffeb3b 60deg 120deg, #4caf50 120deg 180deg, #2196f3 180deg 240deg, #9c27b0 240deg 300deg, #ff9800 300deg 360deg);
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px rgba(0,0,0,0.8); 
+        }
+        .center-circle { width: 100px; height: 100px; background: white; border-radius: 50%; border: 6px solid #b71c1c; display: flex; align-items: center; justify-content: center; color: #b71c1c; font-weight: 900; text-align: center; font-size: 13px; }
         .spin { transform: rotate(2880deg); }
-        button { background: #b71c1c; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #8e1414; }
+
+        /* Estilo EcoQuiz */
+        .eco-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: center; width: 90%; max-width: 400px; }
+        .eco-btn { display: block; width: 100%; background: #795548; color: white; padding: 15px; margin: 10px 0; border-radius: 12px; font-size: 1.1rem; font-weight: bold; border: none; cursor: pointer; }
+        .eco-btn:hover { background: #5d4037; }
     </style>
 </head>
 <body>
+    <div class="overlay">
+        <div class="wheel-container">
+            <div id="wheel" onclick="girarRoleta()">
+                <div class="center-circle">ROLETA DE PRÊMIOS</div>
+            </div>
+        </div>
 
-<div class="wheel-container">
-    <div class="arrow"></div>
-    <div id="wheel" onclick="girarRoleta()">
-        <div class="center-circle">GIRAR</div>
+        <div id="tela">
+            <div class="eco-card">
+                <p style="color: #333;">Clique na roleta para girar!</p>
+            </div>
+        </div>
     </div>
-</div>
-
-<div class="card" id="tela">
-    <h1>Quiz Agro</h1>
-    <p>Clique na roleta para testar seus conhecimentos!</p>
-</div>
 
 <audio id="somGiro" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
 
 <script>
 const baseDeDados = {
-    "menos_12": {
-        "multipla": [{ "pergunta": "O que é agricultura de precisão?", "opcoes": ["Usar tecnologia", "Usar enxada", "Não fazer nada"], "correta": "Usar tecnologia" }],
-        "discursiva": [{ "pergunta": "Como o adubo orgânico ajuda a terra?", "dica": "Lembra que ele vira comida para a planta." }]
-    },
-    "entre_13_17": {
-        "multipla": [{ "pergunta": "Qual ferramenta usa GPS na lavoura?", "opcoes": ["Agricultura de Precisão", "Arado", "Regador"], "correta": "Agricultura de Precisão" }],
-        "discursiva": [{ "pergunta": "Por que o gotejamento economiza água?", "dica": "Ele entrega a água direto na raiz." }]
-    },
-    "mais_18": {
-        "multipla": [{ "pergunta": "O que é Taxa Variável na AP?", "opcoes": ["Aplicar conforme o solo", "Aplicar tudo igual", "Não aplicar"], "correta": "Aplicar conforme o solo" }],
-        "discursiva": [{ "pergunta": "Explique a relação C/N na compostagem.", "dica": "Equilíbrio entre carbono e nitrogênio." }]
-    }
+    "menos_12": { "pergunta": "O que é agricultura de precisão?", "nivel": "Fácil 🌱", "opcoes": ["Usar tecnologia", "Usar enxada"], "correta": "Usar tecnologia" },
+    "entre_13_17": { "pergunta": "Qual ferramenta usa GPS?", "nivel": "Médio 🚀", "opcoes": ["Agricultura de Precisão", "Arado"], "correta": "Agricultura de Precisão" },
+    "mais_18": { "pergunta": "Explique a relação C/N na compostagem.", "nivel": "Difícil 🚜", "dica": "Equilíbrio entre carbono e nitrogênio." }
 };
 
 function girarRoleta() {
-    const wheel = document.getElementById('wheel');
     document.getElementById('somGiro').play();
-    wheel.classList.add('spin');
+    document.getElementById('wheel').classList.add('spin');
     setTimeout(() => {
-        wheel.classList.remove('spin');
         document.getElementById('tela').innerHTML = `
-            <h2>Escolha sua idade:</h2>
-            <button class="age-btn" onclick="sortear('menos_12')">🌱 Até 12 anos</button>
-            <button class="age-btn" onclick="sortear('entre_13_17')">🚀 13 a 17 anos</button>
-            <button class="age-btn" onclick="sortear('mais_18')">🚜 18+ anos</button>
+            <div class="eco-card">
+                <h3>EcoQuiz</h3>
+                <p>Selecione a sua faixa etária:</p>
+                <button class="eco-btn" onclick="sortear('menos_12')">👶 Até 12 anos</button>
+                <button class="eco-btn" onclick="sortear('entre_13_17')">👦 13 a 17 anos</button>
+                <button class="eco-btn" onclick="sortear('mais_18')">👨 18 anos ou mais</button>
+            </div>
         `;
     }, 4000);
 }
 
 function sortear(idade) {
-    const dados = baseDeDados[idade];
-    const todas = [...dados.multipla, ...dados.discursiva];
-    const p = todas[Math.floor(Math.random() * todas.length)];
-    let html = `<h3>${p.pergunta}</h3>`;
-    
+    const p = baseDeDados[idade];
+    let html = `<div class="eco-card"><h3>${p.pergunta}</h3><p>Nível: <b>${p.nivel}</b></p>`;
     if (p.opcoes) {
-        p.opcoes.forEach(op => html += `<button onclick="alert('${op === p.correta ? '✅ Acertou!' : '❌ Errou! Tente de novo.'}')">${op}</button>`);
+        p.opcoes.forEach(op => html += `<button class="eco-btn" onclick="alert('${op === p.correta ? '✅ Acertou!' : '❌ Errou!'}')">${op}</button>`);
     } else {
-        html += `<details style="margin:10px; color:#555;"><summary>Ver Dica</summary><p>${p.dica}</p></details>
-            <form action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="586f5c34-2ae3-4e9b-bbc4-23fa22bdfc22">
-                <input type="text" name="nome" placeholder="Seu nome" required>
-                <textarea name="resposta" placeholder="Sua resposta"></textarea>
-                <button type="submit">Enviar Resposta</button>
-            </form>`;
+        html += `<p>Dica: ${p.dica}</p>
+                 <form action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="586f5c34-2ae3-4e9b-bbc4-23fa22bdfc22">
+                    <input type="text" name="nome" placeholder="Seu nome" required style="width:100%; padding:10px; margin:5px 0;">
+                    <button type="submit" class="eco-btn">Enviar Resposta</button>
+                 </form>`;
     }
-    html += `<button style="background:#444; margin-top:15px;" onclick="location.reload()">Girar Novamente</button>`;
+    html += `<button class="eco-btn" style="background:#444" onclick="location.reload()">Girar Novamente</button></div>`;
     document.getElementById('tela').innerHTML = html;
 }
 </script>
