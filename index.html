@@ -2,55 +2,64 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>EcoQuiz Agro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoQuiz - Roleta</title>
     <style>
-        /* Fundo fixo sem depender de pastas */
         body { 
             margin: 0; padding: 0; min-height: 100vh;
             background: url('https://images.unsplash.com/photo-1523348837708-15d4a09cfacb?q=80&w=2560') no-repeat center center fixed;
             background-size: cover;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif;
         }
-        .container { background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 20px; text-align: center; width: 90%; max-width: 400px; }
+        .box { background: white; padding: 30px; border-radius: 20px; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        /* Roleta Simplificada */
-        #wheel { 
-            width: 250px; height: 250px; border-radius: 50%; border: 10px solid #5d4037;
+        /* Roleta Aumentada */
+        #roleta { 
+            width: 300px; height: 300px; border-radius: 50%; border: 15px solid #5d4037;
             background: conic-gradient(#ff0000 0deg 120deg, #4caf50 120deg 240deg, #ff9800 240deg 360deg);
-            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 4s ease-out;
+            margin: 0 auto 25px; transition: 4s ease-out; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; text-shadow: 1px 1px 2px black;
         }
-        .spin { transform: rotate(1440deg); }
+        .girar { transform: rotate(1440deg); }
         .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="wheel" onclick="girar()">
-        <div style="background:white; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:bold; color:#5d4037;">GIRAR</div>
-    </div>
+<div class="box">
+    <div id="roleta" onclick="rodar()" class="girar-anim">GIRAR ROLETA</div>
     <div id="tela">
-        <p>Clique na roleta para começar!</p>
+        <p>Clique na roleta para iniciar!</p>
     </div>
 </div>
 
 <script>
-function girar() {
-    document.getElementById('wheel').classList.add('spin');
+function rodar() {
+    document.getElementById('roleta').classList.add('girar');
     setTimeout(() => {
         document.getElementById('tela').innerHTML = `
-            <h3>Escolha seu nível:</h3>
-            <button class="btn" style="background:#2e7d32" onclick="pergunta('Fácil 🌱')">Fácil 🌱</button>
-            <button class="btn" style="background:#c62828" onclick="pergunta('Difícil 🚜')">Difícil 🚜</button>
+            <h3>Selecione sua faixa etária:</h3>
+            <button class="btn" style="background:#795548" onclick="exibirNiveis('👶 Até 12 anos')">👶 Até 12 anos</button>
+            <button class="btn" style="background:#795548" onclick="exibirNiveis('👦 13 a 17 anos')">👦 13 a 17 anos</button>
+            <button class="btn" style="background:#795548" onclick="exibirNiveis('👨 18 anos ou mais')">👨 18 anos ou mais</button>
         `;
-    }, 3000);
+    }, 2000);
 }
 
-function pergunta(nivel) {
+function exibirNiveis(idade) {
     document.getElementById('tela').innerHTML = `
-        <h3>Nível: ${nivel}</h3>
-        <p>Pergunta do desafio agro aqui...</p>
-        <button class="btn" style="background:#555" onclick="location.reload()">Girar Novamente</button>
+        <h3>Idade: ${idade}</h3>
+        <button class="btn" style="background:#2e7d32" onclick="mostrarPergunta('Fácil 🌱', '${idade}')">Fácil 🌱</button>
+        <button class="btn" style="background:#c62828" onclick="mostrarPergunta('Difícil 🚜', '${idade}')">Difícil 🚜</button>
+    `;
+}
+
+function mostrarPergunta(nivel, idade) {
+    document.getElementById('tela').innerHTML = `
+        <h3>Pergunta do EcoQuiz</h3>
+        <p>Qual a importância da sustentabilidade no campo?</p>
+        <div style="font-weight:bold; margin-top:15px; color:#555;">Nível: ${nivel}</div>
+        <button class="btn" style="background:#555; margin-top:20px;" onclick="location.reload()">Reiniciar</button>
     `;
 }
 </script>
