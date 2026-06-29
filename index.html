@@ -14,6 +14,7 @@ layout: null
         .girar { animation: girarAnimacao 4s cubic-bezier(0.17, 0.67, 0.12, 0.99) forwards; }
         @keyframes girarAnimacao { from { transform: rotate(0deg); } to { transform: rotate(2880deg); } }
         .btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; background: #795548; }
+        .btn-dica { background: #ff9800; }
         .btn:hover { opacity: 0.9; }
         .nivel { font-size: 0.85em; color: #555; font-style: italic; margin-bottom: 10px; }
         textarea { width: 100%; height: 80px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; padding: 10px; box-sizing: border-box; }
@@ -23,31 +24,32 @@ layout: null
 
 <div class="box">
     <div id="roleta" onclick="rodar()"></div>
-    <div id="tela"><h3>Bem-vindo ao EcoQuiz!</h3><p>Clique na roleta para começar.</p></div>
+    <div id="tela"><h3>Bem-vindo ao EcoQuiz!</h3><p>Clique na roleta para começar.</p>
+    </div>
 </div>
 
 <script>
 const banco = {
     "👶 Infantil": [
-        { p: "O que significa cultivar de forma orgânica?", n: "Fácil", tipo: "escolha", opc: ["Usar venenos", "Sem agrotóxicos", "Plantar no escuro"], corr: "Sem agrotóxicos" },
-        { p: "Por que as abelhas são importantes?", n: "Fácil", tipo: "escolha", opc: ["Fazem mel", "Ajudam a polinizar", "Comem plantas"], corr: "Ajudam a polinizar" },
-        { p: "O que é compostagem?", n: "Médio", tipo: "escolha", opc: ["Queimar lixo", "Transformar restos em adubo", "Lavar comida"], corr: "Transformar restos em adubo" },
-        { p: "Qual o recurso principal para as plantas?", n: "Fácil", tipo: "escolha", opc: ["Plástico", "Água limpa e solo", "Telefone"], corr: "Água limpa e solo" },
-        { p: "Como as plantas bebem água?", n: "Médio", tipo: "discursiva", d: "Dica: Elas usam suas raízes para absorver água do solo." }
+        { p: "O que significa cultivar de forma orgânica?", n: "Fácil", tipo: "escolha", opc: ["Usar venenos", "Sem agrotóxicos", "Plantar no escuro"], corr: "Sem agrotóxicos", d: "Dica: É o contrário de usar produtos químicos tóxicos." },
+        { p: "Por que as abelhas são importantes?", n: "Fácil", tipo: "escolha", opc: ["Fazem mel", "Ajudam a polinizar", "Comem plantas"], corr: "Ajudam a polinizar", d: "Dica: Elas levam o pólen de flor em flor." },
+        { p: "O que é compostagem?", n: "Médio", tipo: "escolha", opc: ["Queimar lixo", "Transformar restos em adubo", "Lavar comida"], corr: "Transformar restos em adubo", d: "Dica: É reciclar restos de comida para alimentar a terra." },
+        { p: "Como as plantas bebem água?", n: "Médio", tipo: "discursiva", d: "Dica: Elas têm 'canudinhos' invisíveis escondidos debaixo da terra que puxam a água para cima." },
+        { p: "Por que as plantas precisam da luz do sol?", n: "Difícil", tipo: "discursiva", d: "Dica: O sol é o ingrediente principal da 'receita' que elas usam para fabricar o próprio alimento." }
     ],
-    "👦 Juvenil": [
-        { p: "O que é rotação de culturas?", n: "Médio", tipo: "escolha", opc: ["Alternar plantas", "Girar trator", "Vender para fora"], corr: "Alternar plantas" },
-        { p: "Qual o impacto de químicos no solo?", n: "Médio", tipo: "escolha", opc: ["Aumenta fruto", "Contamina lençol freático", "Custo baixo"], corr: "Contamina lençol freático" },
-        { p: "O que é Agrofloresta?", n: "Difícil", tipo: "escolha", opc: ["Imitar a floresta", "Loja de plantas", "Desmatar"], corr: "Imitar a floresta" },
-        { p: "O que é um alimento transgênico?", n: "Difícil", tipo: "escolha", opc: ["DNA modificado", "Cresce rápido", "Vem de fora"], corr: "DNA modificado" },
-        { p: "Explique a erosão hídrica.", n: "Médio", tipo: "discursiva", d: "Dica: Ocorre quando a chuva retira a camada fértil do solo." }
+    "👦 13 a 17 anos": [
+        { p: "O que é rotação de culturas?", n: "Médio", tipo: "escolha", opc: ["Alternar plantas", "Girar trator", "Vender para fora"], corr: "Alternar plantas", d: "Dica: É revezar o tipo de planta no mesmo solo." },
+        { p: "Qual o impacto de químicos no solo?", n: "Médio", tipo: "escolha", opc: ["Aumenta fruto", "Contamina lençol freático", "Custo baixo"], corr: "Contamina lençol freático", d: "Dica: Afeta a água que bebemos embaixo da terra." },
+        { p: "O que é Agrofloresta?", n: "Difícil", tipo: "escolha", opc: ["Imitar a floresta", "Loja de plantas", "Desmatar"], corr: "Imitar a floresta", d: "Dica: Integra produção de alimentos com o sistema da floresta." },
+        { p: "Como o nitrogênio ajuda a planta?", n: "Médio", tipo: "discursiva", d: "Dica: Pense na cor das folhas e no crescimento da parte aérea da planta." },
+        { p: "O que causa a erosão hídrica no solo?", n: "Difícil", tipo: "discursiva", d: "Dica: Ocorre quando a água da chuva atinge um solo que não tem cobertura vegetal para protegê-lo." }
     ],
     "+18 Anos": [
-        { p: "Qual o conceito de Segurança Alimentar?", n: "Médio", tipo: "escolha", opc: ["Acesso a comida nutritiva", "Comida cara", "Produção industrial"], corr: "Acesso a comida nutritiva" },
-        { p: "O que é sequestro de carbono no solo?", n: "Difícil", tipo: "escolha", opc: ["Armazenar CO2 no solo", "Queimar biomassa", "Poluir o ar"], corr: "Armazenar CO2 no solo" },
-        { p: "Defina Agricultura de Precisão.", n: "Difícil", tipo: "escolha", opc: ["Uso de dados e tecnologia", "Corte manual", "Uso de enxada"], corr: "Uso de dados e tecnologia" },
-        { p: "O que são créditos de carbono?", n: "Difícil", tipo: "discursiva", d: "Dica: É um mecanismo financeiro de compensação de emissões de gases." },
-        { p: "Explique o impacto do uso de pesticidas na biodiversidade.", n: "Médio", tipo: "discursiva", d: "Dica: Considere o efeito sobre insetos polinizadores e vida no solo." }
+        { p: "Qual o conceito de Segurança Alimentar?", n: "Médio", tipo: "escolha", opc: ["Acesso a comida nutritiva", "Comida cara", "Produção industrial"], corr: "Acesso a comida nutritiva", d: "Dica: É garantir que todos tenham o que comer com qualidade." },
+        { p: "Explique a agricultura regenerativa.", n: "Médio", tipo: "discursiva", d: "Dica: Não foca apenas na produtividade, mas em deixar o solo melhor do que quando começamos." },
+        { p: "Como a rotação de culturas beneficia o solo?", n: "Difícil", tipo: "discursiva", d: "Dica: Interrupção do ciclo de vida de pragas específicas." },
+        { p: "O que é o sequestro de carbono pelo solo?", n: "Difícil", tipo: "discursiva", d: "Dica: Processo onde a planta captura CO2 do ar e o fixa na terra." },
+        { p: "Qual a função do húmus na terra?", n: "Difícil", tipo: "discursiva", d: "Dica: Funciona como uma 'esponja' de nutrientes e água." }
     ]
 };
 
@@ -68,8 +70,9 @@ function escolher(faixa) {
     
     if (q.tipo === "escolha") {
         html += q.opc.map(o => `<button class="btn" onclick="alert('${o === q.corr ? '✅ Correto!' : '❌ Errado!'}')">${o}</button>`).join('');
+        html += `<button class="btn btn-dica" onclick="alert('${q.d}')">💡 Ver Dica</button>`;
     } else {
-        html += `<p style="font-size: 0.8em; color: #444;"><em>${q.d}</em></p><textarea></textarea><button class="btn" onclick="alert('Resposta enviada!')">Enviar Resposta</button>`;
+        html += `<p style="font-size: 0.9em; color: #d84315;"><em>${q.d}</em></p><textarea></textarea><button class="btn" onclick="alert('Resposta enviada!')">Enviar Resposta</button>`;
     }
     html += `<button class="btn" style="background:#b71c1c" onclick="location.reload()">Girar Novamente</button>`;
     document.getElementById('tela').innerHTML = html;
