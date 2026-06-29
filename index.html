@@ -5,13 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoQuiz - Roleta</title>
     <style>
-        body { margin: 0; min-height: 100vh; background: url('https://images.unsplash.com/photo-1523348837708-15d4a09cfacb?q=80&w=2560') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; font-family: sans-serif; }
-        .box { background: white; padding: 30px; border-radius: 20px; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #roleta { width: 300px; height: 300px; border-radius: 50%; border: 15px solid #5d4037; background: conic-gradient(red 0deg 120deg, green 120deg 240deg, orange 240deg 360deg); margin: 0 auto 25px; transition: 4s ease-out; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
-        .girar { transform: rotate(1440deg); }
-        .btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; background: #795548; }
-        .nivel-tag { font-size: 0.9em; color: #555; font-weight: bold; margin-top: 10px; padding: 5px; background: #eee; border-radius: 5px; display: inline-block; }
-    </style>
+       #roleta { 
+    width: 320px; 
+    height: 320px; 
+    border-radius: 50%; 
+    border: 12px solid #ffd700; /* Borda dourada luxuosa */
+    background: conic-gradient(#ff0000 0deg 60deg, #ffd700 60deg 120deg, #4caf50 120deg 180deg, #2196f3 180deg 240deg, #9c27b0 240deg 300deg, #ff9800 300deg 360deg);
+    margin: 0 auto 25px; 
+    transition: 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 50px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+/* Efeito de "ponteiro" ou centro da roleta */
+#roleta::after {
+    content: "GIRAR";
+    background: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: #5d4037;
+    border: 4px solid #ffd700;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.girar { transform: rotate(2880deg); }
 </head>
 <body>
 
