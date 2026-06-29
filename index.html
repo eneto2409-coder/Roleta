@@ -21,6 +21,7 @@ layout: null
         .girar { transform: rotate(2880deg); }
         
         .btn { display: block; width: 100%; padding: 14px; margin: 8px 0; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; background: #795548; transition: 0.3s; }
+        .btn-opc { background: #555; }
         .btn:hover { opacity: 0.9; }
         .nivel-tag { font-size: 0.9em; color: #fff; font-weight: bold; margin: 10px 0; padding: 6px 12px; background: #5d4037; border-radius: 5px; display: inline-block; }
     </style>
@@ -30,46 +31,30 @@ layout: null
 <div class="box">
     <div id="roleta" onclick="rodar()"></div>
     <div id="tela">
-        <p>Bem-vindo ao EcoQuiz! Clique na roleta.</p>
+        <p>Bem-vindo ao EcoQuiz! Clique na roleta para começar.</p>
     </div>
 </div>
 
 <script>
 const banco = {
     "👶 Até 12 anos": [
-        { p: "Como as plantas bebem água?", n: "Médio", d: "Dica: Elas usam as raízes." },
-        { p: "Por que as abelhas são importantes?", n: "Difícil", d: "Dica: Elas fazem a polinização." }
+        { p: "O que as plantas precisam para crescer?", n: "Médio", tipo: "escolha", opc: ["Sol e Água", "Açúcar e Sal"], corr: "Sol e Água" },
+        { p: "Como as plantas bebem água?", n: "Difícil", tipo: "discursiva", d: "Dica: Elas usam as raízes." }
     ],
     "👦 13 a 17 anos": [
-        { p: "Qual o papel do nitrogênio no solo?", n: "Médio", d: "Dica: Essencial para o crescimento foliar." },
-        { p: "Explique a erosão hídrica.", n: "Difícil", d: "Dica: É causada pelo escoamento da água." }
-    ],
-    "👨 18 anos ou mais": [
-        { p: "O que é agricultura regenerativa?", n: "Médio", d: "Dica: Foca na restauração do solo." },
-        { p: "Como mitigar o efeito estufa no campo?", n: "Difícil", d: "Dica: Sistemas agroflorestais." }
+        { p: "Qual o papel do nitrogênio?", n: "Médio", tipo: "escolha", opc: ["Crescimento", "Cor da flor"], corr: "Crescimento" },
+        { p: "Explique a erosão hídrica.", n: "Difícil", tipo: "discursiva", d: "Dica: É causada pelo escoamento da água." }
     ]
 };
 
 function rodar() {
     document.getElementById('roleta').classList.add('girar');
     setTimeout(() => {
-        document.getElementById('tela').innerHTML = `
-            <h3>Selecione sua faixa etária:</h3>
-            ${Object.keys(banco).map(f => `<button class="btn" onclick="escolher('${f}')">${f}</button>`).join('')}
-        `;
+        document.getElementById('tela').innerHTML = `<h3>Selecione sua faixa etária:</h3>` + 
+            Object.keys(banco).map(f => `<button class="btn" onclick="escolher('${f}')">${f}</button>`).join('');
     }, 2000);
 }
 
 function escolher(faixa) {
     const q = banco[faixa][Math.floor(Math.random() * banco[faixa].length)];
-    document.getElementById('tela').innerHTML = `
-        <p>${q.p}</p>
-        <div class="nivel-tag">Nível: ${q.n}</div>
-        <p style="font-size:0.9em; color:#333;"><i>${q.d}</i></p>
-        <textarea style="width:90%; height:80px;"></textarea>
-        <button class="btn" onclick="location.reload()">Girar Novamente</button>
-    `;
-}
-</script>
-</body>
-</html>
+    let html = `<p>${q.p}</p><div class="
