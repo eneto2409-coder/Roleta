@@ -10,78 +10,64 @@ layout: null
     <style>
         body { margin: 0; min-height: 100vh; background: url('https://images.unsplash.com/photo-1523348837708-15d4a09cfacb?q=80&w=2560') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', sans-serif; }
         .box { background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 20px; text-align: center; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
-        #roleta { 
-            width: 320px; height: 320px; border-radius: 50%; border: 12px solid #ffd700;
-            background: conic-gradient(#ff0000 0deg 60deg, #ffd700 60deg 120deg, #4caf50 120deg 180deg, #2196f3 180deg 240deg, #9c27b0 240deg 300deg, #ff9800 300deg 360deg);
-            margin: 0 auto 25px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 50px rgba(0,0,0,0.3);
-        }
-        /* A transição agora é definida aqui */
+        #roleta { width: 300px; height: 300px; border-radius: 50%; border: 10px solid #ffd700; background: conic-gradient(#ff0000 0deg 72deg, #ffd700 72deg 144deg, #4caf50 144deg 216deg, #2196f3 216deg 288deg, #9c27b0 288deg 360deg); margin: 0 auto 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .girar { animation: girarAnimacao 4s cubic-bezier(0.17, 0.67, 0.12, 0.99) forwards; }
-        
-        @keyframes girarAnimacao {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(2880deg); }
-        }
-
-        #roleta::after { content: "GIRAR"; background: white; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #5d4037; border: 4px solid #ffd700; }
-        
-        .btn { display: block; width: 100%; padding: 14px; margin: 8px 0; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; background: #795548; transition: 0.3s; }
-        .btn-opc { background: #555; }
+        @keyframes girarAnimacao { from { transform: rotate(0deg); } to { transform: rotate(2880deg); } }
+        .btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; background: #795548; }
         .btn:hover { opacity: 0.9; }
-        .nivel-tag { font-size: 0.9em; color: #fff; font-weight: bold; margin: 10px 0; padding: 6px 12px; background: #5d4037; border-radius: 5px; display: inline-block; }
+        textarea { width: 100%; height: 80px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; padding: 10px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
 <div class="box">
     <div id="roleta" onclick="rodar()"></div>
-    <div id="tela">
-        <p>Bem-vindo ao EcoQuiz! Clique na roleta para começar.</p>
-    </div>
+    <div id="tela"><h3>Bem-vindo ao EcoQuiz!</h3><p>Clique na roleta para começar.</p></div>
 </div>
 
 <script>
 const banco = {
-    "👶 Até 12 anos": [
-        { p: "O que significa cultivar alimentos de forma orgânica?", n: "Fácil", tipo: "escolha", opc: ["Usar venenos", "Sem agrotóxicos", "Plantar no escuro"], corr: "Sem agrotóxicos" },
-        { p: "Por que as abelhas são importantes?", n: "Médio", tipo: "escolha", opc: ["Fazem mel", "Ajudam a polinizar", "Comem as plantas"], corr: "Ajudam a polinizar" },
-        { p: "O que é a compostagem?", n: "Médio", tipo: "escolha", opc: ["Queimar lixo", "Transformar restos em adubo", "Lavar comida"], corr: "Transformar restos em adubo" },
-        { p: "Qual o recurso principal para as plantas?", n: "Fácil", tipo: "escolha", opc: ["Plástico", "Água limpa e solo", "Telefone"], corr: "Água limpa e solo" },
-        { p: "O que é o reflorestamento?", n: "Médio", tipo: "escolha", opc: ["Cortar árvores", "Plantar onde foram retiradas", "Construir casas"], corr: "Plantar onde foram retiradas" }
+    "👶 Infantil": [
+        { p: "O que significa cultivar de forma orgânica?", tipo: "escolha", opc: ["Usar venenos", "Sem agrotóxicos", "Plantar no escuro"], corr: "Sem agrotóxicos" },
+        { p: "Por que as abelhas são importantes?", tipo: "escolha", opc: ["Fazem mel", "Ajudam a polinizar", "Comem plantas"], corr: "Ajudam a polinizar" },
+        { p: "O que é compostagem?", tipo: "escolha", opc: ["Queimar lixo", "Transformar restos em adubo", "Lavar comida"], corr: "Transformar restos em adubo" },
+        { p: "Qual o recurso principal para as plantas?", tipo: "escolha", opc: ["Plástico", "Água limpa e solo", "Telefone"], corr: "Água limpa e solo" },
+        { p: "Como as plantas bebem água?", tipo: "discursiva", d: "Dica: Elas usam suas raízes." }
     ],
-    "👦 13 a 17 anos": [
-        { p: "O que é rotação de culturas?", n: "Médio", tipo: "escolha", opc: ["Alternar plantas no solo", "Girar o trator", "Vender para outros países"], corr: "Alternar plantas no solo" },
-        { p: "Qual o impacto de fertilizantes químicos?", n: "Difícil", tipo: "escolha", opc: ["Aumenta fruto", "Contamina lençol freático", "Custo baixo"], corr: "Contamina lençol freático" },
-        { p: "O que é Agrofloresta?", n: "Médio", tipo: "escolha", opc: ["Imitar a floresta", "Loja de plantas", "Desmatar"], corr: "Imitar a floresta" },
-        { p: "O que é um alimento transgênico?", n: "Difícil", tipo: "escolha", opc: ["DNA modificado", "Cresce rápido", "Vem de fora"], corr: "DNA modificado" },
-        { p: "Qual a importância da conservação do solo?", n: "Médio", tipo: "escolha", opc: ["Evitar erosão", "Fazer estradas", "Pedras no terreno"], corr: "Evitar erosão" }
+    "👦 Juvenil": [
+        { p: "O que é rotação de culturas?", tipo: "escolha", opc: ["Alternar plantas", "Girar trator", "Vender para fora"], corr: "Alternar plantas" },
+        { p: "Qual o impacto de químicos no solo?", tipo: "escolha", opc: ["Aumenta fruto", "Contamina lençol freático", "Custo baixo"], corr: "Contamina lençol freático" },
+        { p: "O que é Agrofloresta?", tipo: "escolha", opc: ["Imitar a floresta", "Loja de plantas", "Desmatar"], corr: "Imitar a floresta" },
+        { p: "O que é um alimento transgênico?", tipo: "escolha", opc: ["DNA modificado", "Cresce rápido", "Vem de fora"], corr: "DNA modificado" },
+        { p: "Explique a erosão hídrica.", tipo: "discursiva", d: "Dica: É causada pelo escoamento da água." }
+    ],
+    "👨 Adulto": [
+        { p: "O que é agroecologia?", tipo: "escolha", opc: ["Sustentabilidade", "Uso intensivo de químicos", "Monocultura"], corr: "Sustentabilidade" },
+        { p: "Qual a importância da conservação do solo?", tipo: "escolha", opc: ["Evitar erosão", "Construir estradas", "Pedras no terreno"], corr: "Evitar erosão" },
+        { p: "O que é Agricultura de Precisão?", tipo: "escolha", opc: ["Uso de tecnologia", "Apenas enxada", "Corte manual"], corr: "Uso de tecnologia" },
+        { p: "O que caracteriza a segurança alimentar?", tipo: "escolha", opc: ["Acesso a comida saudável", "Comida cara", "Pouca comida"], corr: "Acesso a comida saudável" },
+        { p: "Como o nitrogênio ajuda no crescimento?", tipo: "discursiva", d: "Dica: É um nutriente essencial." }
     ]
 };
 
 function rodar() {
     const roleta = document.getElementById('roleta');
-    
-    // Remove a classe para resetar e força o navegador a processar a remoção
     roleta.classList.remove('girar');
     void roleta.offsetWidth; 
-    
-    // Adiciona a animação
     roleta.classList.add('girar');
-    
     setTimeout(() => {
-        document.getElementById('tela').innerHTML = `<h3>Selecione sua faixa etária:</h3>` + 
-            Object.keys(banco).map(f => `<button class="btn" onclick="escolher('${f}')">${f}</button>`).join('');
-    }, 4000); 
+        let html = `<h3>Escolha sua faixa etária:</h3>` + Object.keys(banco).map(f => `<button class="btn" onclick="escolher('${f}')">${f}</button>`).join('');
+        document.getElementById('tela').innerHTML = html;
+    }, 4000);
 }
 
 function escolher(faixa) {
     const q = banco[faixa][Math.floor(Math.random() * banco[faixa].length)];
-    let html = `<p>${q.p}</p><div class="nivel-tag">Nível: ${q.n}</div>`;
-    
+    let html = `<p>${q.p}</p>`;
     if (q.tipo === "escolha") {
-        html += q.opc.map(o => `<button class="btn btn-opc" onclick="alert('${o === q.corr ? '✅ Correto!' : '❌ Errado!'}')">${o}</button>`).join('');
+        html += q.opc.map(o => `<button class="btn" onclick="alert('${o === q.corr ? '✅ Correto!' : '❌ Errado!'}')">${o}</button>`).join('');
+    } else {
+        html += `<textarea placeholder="${q.d}"></textarea><button class="btn" onclick="alert('Resposta enviada!')">Enviar Resposta</button>`;
     }
     html += `<button class="btn" style="background:#b71c1c" onclick="location.reload()">Girar Novamente</button>`;
     document.getElementById('tela').innerHTML = html;
