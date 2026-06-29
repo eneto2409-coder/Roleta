@@ -15,6 +15,7 @@ layout: null
         @keyframes girarAnimacao { from { transform: rotate(0deg); } to { transform: rotate(2880deg); } }
         .btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; background: #795548; }
         .btn:hover { opacity: 0.9; }
+        .nivel { font-size: 0.85em; color: #555; font-style: italic; margin-bottom: 10px; }
         textarea { width: 100%; height: 80px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; padding: 10px; box-sizing: border-box; }
     </style>
 </head>
@@ -28,25 +29,25 @@ layout: null
 <script>
 const banco = {
     "👶 Infantil": [
-        { p: "O que significa cultivar de forma orgânica?", tipo: "escolha", opc: ["Usar venenos", "Sem agrotóxicos", "Plantar no escuro"], corr: "Sem agrotóxicos" },
-        { p: "Por que as abelhas são importantes?", tipo: "escolha", opc: ["Fazem mel", "Ajudam a polinizar", "Comem plantas"], corr: "Ajudam a polinizar" },
-        { p: "O que é compostagem?", tipo: "escolha", opc: ["Queimar lixo", "Transformar restos em adubo", "Lavar comida"], corr: "Transformar restos em adubo" },
-        { p: "Qual o recurso principal para as plantas?", tipo: "escolha", opc: ["Plástico", "Água limpa e solo", "Telefone"], corr: "Água limpa e solo" },
-        { p: "Como as plantas bebem água?", tipo: "discursiva", d: "Dica: Elas usam suas raízes." }
+        { p: "O que significa cultivar de forma orgânica?", n: "Fácil", tipo: "escolha", opc: ["Usar venenos", "Sem agrotóxicos", "Plantar no escuro"], corr: "Sem agrotóxicos" },
+        { p: "Por que as abelhas são importantes?", n: "Fácil", tipo: "escolha", opc: ["Fazem mel", "Ajudam a polinizar", "Comem plantas"], corr: "Ajudam a polinizar" },
+        { p: "O que é compostagem?", n: "Médio", tipo: "escolha", opc: ["Queimar lixo", "Transformar restos em adubo", "Lavar comida"], corr: "Transformar restos em adubo" },
+        { p: "Qual o recurso principal para as plantas?", n: "Fácil", tipo: "escolha", opc: ["Plástico", "Água limpa e solo", "Telefone"], corr: "Água limpa e solo" },
+        { p: "Como as plantas bebem água?", n: "Médio", tipo: "discursiva", d: "Dica: Elas usam suas raízes para absorver água do solo." }
     ],
     "👦 Juvenil": [
-        { p: "O que é rotação de culturas?", tipo: "escolha", opc: ["Alternar plantas", "Girar trator", "Vender para fora"], corr: "Alternar plantas" },
-        { p: "Qual o impacto de químicos no solo?", tipo: "escolha", opc: ["Aumenta fruto", "Contamina lençol freático", "Custo baixo"], corr: "Contamina lençol freático" },
-        { p: "O que é Agrofloresta?", tipo: "escolha", opc: ["Imitar a floresta", "Loja de plantas", "Desmatar"], corr: "Imitar a floresta" },
-        { p: "O que é um alimento transgênico?", tipo: "escolha", opc: ["DNA modificado", "Cresce rápido", "Vem de fora"], corr: "DNA modificado" },
-        { p: "Explique a erosão hídrica.", tipo: "discursiva", d: "Dica: É causada pelo escoamento da água." }
+        { p: "O que é rotação de culturas?", n: "Médio", tipo: "escolha", opc: ["Alternar plantas", "Girar trator", "Vender para fora"], corr: "Alternar plantas" },
+        { p: "Qual o impacto de químicos no solo?", n: "Médio", tipo: "escolha", opc: ["Aumenta fruto", "Contamina lençol freático", "Custo baixo"], corr: "Contamina lençol freático" },
+        { p: "O que é Agrofloresta?", n: "Difícil", tipo: "escolha", opc: ["Imitar a floresta", "Loja de plantas", "Desmatar"], corr: "Imitar a floresta" },
+        { p: "O que é um alimento transgênico?", n: "Difícil", tipo: "escolha", opc: ["DNA modificado", "Cresce rápido", "Vem de fora"], corr: "DNA modificado" },
+        { p: "Explique a erosão hídrica.", n: "Médio", tipo: "discursiva", d: "Dica: Ocorre quando a chuva retira a camada fértil do solo." }
     ],
     "+18 Anos": [
-        { p: "Qual o conceito de Segurança Alimentar?", tipo: "escolha", opc: ["Acesso a comida nutritiva", "Comida cara", "Produção industrial"], corr: "Acesso a comida nutritiva" },
-        { p: "O que é sequestro de carbono no solo?", tipo: "escolha", opc: ["Armazenar CO2 no solo", "Queimar biomassa", "Poluir o ar"], corr: "Armazenar CO2 no solo" },
-        { p: "Defina Agricultura de Precisão.", tipo: "escolha", opc: ["Uso de dados e tecnologia", "Corte manual", "Uso de enxada"], corr: "Uso de dados e tecnologia" },
-        { p: "O que são créditos de carbono?", tipo: "discursiva", d: "Dica: Fale sobre compensação de emissões." },
-        { p: "Explique o impacto do uso de pesticidas na biodiversidade local.", tipo: "discursiva", d: "Dica: Fale sobre o equilíbrio ecológico." }
+        { p: "Qual o conceito de Segurança Alimentar?", n: "Médio", tipo: "escolha", opc: ["Acesso a comida nutritiva", "Comida cara", "Produção industrial"], corr: "Acesso a comida nutritiva" },
+        { p: "O que é sequestro de carbono no solo?", n: "Difícil", tipo: "escolha", opc: ["Armazenar CO2 no solo", "Queimar biomassa", "Poluir o ar"], corr: "Armazenar CO2 no solo" },
+        { p: "Defina Agricultura de Precisão.", n: "Difícil", tipo: "escolha", opc: ["Uso de dados e tecnologia", "Corte manual", "Uso de enxada"], corr: "Uso de dados e tecnologia" },
+        { p: "O que são créditos de carbono?", n: "Difícil", tipo: "discursiva", d: "Dica: É um mecanismo financeiro de compensação de emissões de gases." },
+        { p: "Explique o impacto do uso de pesticidas na biodiversidade.", n: "Médio", tipo: "discursiva", d: "Dica: Considere o efeito sobre insetos polinizadores e vida no solo." }
     ]
 };
 
@@ -63,11 +64,12 @@ function rodar() {
 
 function escolher(faixa) {
     const q = banco[faixa][Math.floor(Math.random() * banco[faixa].length)];
-    let html = `<p>${q.p}</p>`;
+    let html = `<p>${q.p}</p><div class="nivel">Nível: ${q.n}</div>`;
+    
     if (q.tipo === "escolha") {
         html += q.opc.map(o => `<button class="btn" onclick="alert('${o === q.corr ? '✅ Correto!' : '❌ Errado!'}')">${o}</button>`).join('');
     } else {
-        html += `<textarea placeholder="${q.d}"></textarea><button class="btn" onclick="alert('Resposta enviada!')">Enviar Resposta</button>`;
+        html += `<p style="font-size: 0.8em; color: #444;"><em>${q.d}</em></p><textarea></textarea><button class="btn" onclick="alert('Resposta enviada!')">Enviar Resposta</button>`;
     }
     html += `<button class="btn" style="background:#b71c1c" onclick="location.reload()">Girar Novamente</button>`;
     document.getElementById('tela').innerHTML = html;
