@@ -38,12 +38,18 @@ layout: null
 <script>
 const banco = {
     "👶 Até 12 anos": [
-        { p: "O que as plantas precisam para crescer?", n: "Médio", tipo: "escolha", opc: ["Sol e Água", "Açúcar e Sal"], corr: "Sol e Água" },
-        { p: "Como as plantas bebem água?", n: "Difícil", tipo: "discursiva", d: "Dica: Elas usam as raízes." }
+        { p: "O que significa cultivar alimentos de forma orgânica?", n: "Fácil", tipo: "escolha", opc: ["Usar venenos", "Sem agrotóxicos", "Plantar no escuro"], corr: "Sem agrotóxicos" },
+        { p: "Por que as abelhas são importantes?", n: "Médio", tipo: "escolha", opc: ["Fazem mel", "Ajudam a polinizar", "Comem as plantas"], corr: "Ajudam a polinizar" },
+        { p: "O que é a compostagem?", n: "Médio", tipo: "escolha", opc: ["Queimar lixo", "Transformar restos em adubo", "Lavar comida"], corr: "Transformar restos em adubo" },
+        { p: "Qual o recurso principal para as plantas?", n: "Fácil", tipo: "escolha", opc: ["Plástico", "Água limpa e solo", "Telefone"], corr: "Água limpa e solo" },
+        { p: "O que é o reflorestamento?", n: "Médio", tipo: "escolha", opc: ["Cortar árvores", "Plantar onde foram retiradas", "Construir casas"], corr: "Plantar onde foram retiradas" }
     ],
     "👦 13 a 17 anos": [
-        { p: "Qual o papel do nitrogênio?", n: "Médio", tipo: "escolha", opc: ["Crescimento", "Cor da flor"], corr: "Crescimento" },
-        { p: "Explique a erosão hídrica.", n: "Difícil", tipo: "discursiva", d: "Dica: É causada pelo escoamento da água." }
+        { p: "O que é rotação de culturas?", n: "Médio", tipo: "escolha", opc: ["Alternar plantas no solo", "Girar o trator", "Vender para outros países"], corr: "Alternar plantas no solo" },
+        { p: "Qual o impacto de fertilizantes químicos?", n: "Difícil", tipo: "escolha", opc: ["Aumenta fruto", "Contamina lençol freático", "Custo baixo"], corr: "Contamina lençol freático" },
+        { p: "O que é Agrofloresta?", n: "Médio", tipo: "escolha", opc: ["Imitar a floresta", "Loja de plantas", "Desmatar"], corr: "Imitar a floresta" },
+        { p: "O que é um alimento transgênico?", n: "Difícil", tipo: "escolha", opc: ["DNA modificado", "Cresce rápido", "Vem de fora"], corr: "DNA modificado" },
+        { p: "Qual a importância da conservação do solo?", n: "Médio", tipo: "escolha", opc: ["Evitar erosão", "Fazer estradas", "Pedras no terreno"], corr: "Evitar erosão" }
     ]
 };
 
@@ -57,4 +63,14 @@ function rodar() {
 
 function escolher(faixa) {
     const q = banco[faixa][Math.floor(Math.random() * banco[faixa].length)];
-    let html = `<p>${q.p}</p><div class="
+    let html = `<p>${q.p}</p><div class="nivel-tag">Nível: ${q.n}</div>`;
+    
+    if (q.tipo === "escolha") {
+        html += q.opc.map(o => `<button class="btn btn-opc" onclick="alert('${o === q.corr ? '✅ Correto!' : '❌ Errado!'}')">${o}</button>`).join('');
+    }
+    html += `<button class="btn" style="background:#b71c1c" onclick="location.reload()">Girar Novamente</button>`;
+    document.getElementById('tela').innerHTML = html;
+}
+</script>
+</body>
+</html>
