@@ -14,11 +14,18 @@ layout: null
         #roleta { 
             width: 320px; height: 320px; border-radius: 50%; border: 12px solid #ffd700;
             background: conic-gradient(#ff0000 0deg 60deg, #ffd700 60deg 120deg, #4caf50 120deg 180deg, #2196f3 180deg 240deg, #9c27b0 240deg 300deg, #ff9800 300deg 360deg);
-            margin: 0 auto 25px; transition: 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); cursor: pointer;
+            margin: 0 auto 25px; cursor: pointer;
             display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 50px rgba(0,0,0,0.3);
         }
+        /* A transição agora é definida aqui */
+        .girar { animation: girarAnimacao 4s cubic-bezier(0.17, 0.67, 0.12, 0.99) forwards; }
+        
+        @keyframes girarAnimacao {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(2880deg); }
+        }
+
         #roleta::after { content: "GIRAR"; background: white; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #5d4037; border: 4px solid #ffd700; }
-        .girar { transform: rotate(2880deg); }
         
         .btn { display: block; width: 100%; padding: 14px; margin: 8px 0; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; background: #795548; transition: 0.3s; }
         .btn-opc { background: #555; }
@@ -54,11 +61,19 @@ const banco = {
 };
 
 function rodar() {
-    document.getElementById('roleta').classList.add('girar');
+    const roleta = document.getElementById('roleta');
+    
+    // Remove a classe para resetar e força o navegador a processar a remoção
+    roleta.classList.remove('girar');
+    void roleta.offsetWidth; 
+    
+    // Adiciona a animação
+    roleta.classList.add('girar');
+    
     setTimeout(() => {
         document.getElementById('tela').innerHTML = `<h3>Selecione sua faixa etária:</h3>` + 
             Object.keys(banco).map(f => `<button class="btn" onclick="escolher('${f}')">${f}</button>`).join('');
-    }, 2000);
+    }, 4000); 
 }
 
 function escolher(faixa) {
